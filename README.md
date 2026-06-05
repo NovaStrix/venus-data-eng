@@ -30,6 +30,15 @@ The pipeline uses five input domains from one multi-sheet Excel file:
 | Market Share | External brand performance data. | Weekly snapshot. |
 | Product Master | Product and SKU reference data. | Dimension table. |
 
+## Notebook
+
+The `Paragon_DE.ipynb` file contains the full implementation of the pipeline:
+
+- Reads all raw sheets (sell-in A/B/C, sell-out, stock, market_share, product_master).
+- Applies the cleaning rules described in `docs/Data-Engineer-Pipeline-Documentation-2.pdf`.
+- Builds `product_master`, `total_sell_ins`, `stock`, `market_share`, `sell_out`, and the three Looker-style data marts.
+- Outputs cleaned tables that can be loaded into Supabase PostgreSQL.
+  
 ## Data Cleaning and Transformation
 
 Key preparation steps include:
@@ -81,24 +90,6 @@ Some of the main business rules implemented in the pipeline include:
 - ISO week, month, and day attributes added to marts for easier time-based reporting.
 - `value_stock_out_weekly = stock_out * product_master.price` in the stock reporting mart.
 
-## Suggested Repository Structure
-
-```text
-.
-├── data/
-│   └── raw/
-├── notebooks/
-│   └── pipeline.ipynb
-├── sql/
-│   └── marts/
-├── docs/
-│   └── pipeline-guide.pdf
-├── src/
-│   ├── extract.py
-│   ├── transform.py
-│   └── load.py
-└── README.md
-```
 
 ## Tech Stack
 
